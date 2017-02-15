@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+def cfg = rootProject.ext.configuration;
+def libs = rootProject.ext.libraries;
+def test = rootProject.ext.testingLibraries;
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        applicationId cfg.package
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+
+    })
+
+    //Android dependencies
+    compile "com.android.support:appcompat-v7:$libs.supportLibraryVersion"
+    compile "com.android.support.constraint:constraint-layout:$libs.constraintLayout"
+    compile "com.android.support:design:$libs.supportLibraryVersion"
+
+    compile "com.jakewharton:butterknife:$libs.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$libs.butterknifeVersion"
+
+    compile "com.google.dagger:dagger:$libs.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$libs.daggerVersion"
+
+    testCompile "junit:junit:$test.junitVersion"
+}
+
