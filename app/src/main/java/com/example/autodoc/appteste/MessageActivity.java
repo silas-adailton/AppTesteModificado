@@ -8,7 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DisplayMessageActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity {
 
     @BindView(R.id.textMensagem)
     TextView textMensagem;
@@ -20,8 +20,9 @@ public class DisplayMessageActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String mensagem = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String mensagem = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
 
         textMensagem.setText(mensagem);
     }
+
 }

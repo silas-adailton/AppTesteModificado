@@ -1,11 +1,7 @@
 package com.example.autodoc.appteste;
 
-import android.text.TextUtils;
 
-import javax.inject.Inject;
-
-
-public class MainInteractorImpl implements MainInteractor {
+public class HomeInteractorImpl implements HomeInteractor {
 
     @Override
     public void valida(String texto, MainListener listener) {

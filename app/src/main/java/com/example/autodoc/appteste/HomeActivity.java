@@ -12,9 +12,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dagger.internal.DaggerCollections;
 
-public class MainActivity extends AppCompatActivity implements MainContract.MainView {
+public class HomeActivity extends AppCompatActivity implements HomeContract.HomeContractView {
     public static final String EXTRA_MESSAGE = "com.example.autodoc.appteste.EXTRA_MENSAGEM";
 
     @BindView(R.id.editMensagem)
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private String mensagem;
 
     @Inject
-    MainContract.MainPresenter presenter;
+    HomeContract.HomeContractPresenter presenter;
 
     @OnClick(R.id.btnEnviar)
     void enviarMensagem() {
@@ -38,14 +37,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //new MainPresenter(this, new MainInteractorImpl());
-
+        initDagger();
 
     }
 
     private void initDagger() {
-        DaggerMainComponent.builder()
-                .mainModule(new MainModule(this))
+        DaggerHomeComponent.builder()
+                .homeViewModule(new HomeViewModule(this))
+                .homePresenterModule(new HomePresenterModule())
                 .build()
                 .inject(this);
     }
@@ -59,20 +58,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
 
     @Override
     public void sucess() {
-        Toast.makeText(this, "Validado com sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.Validado), Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void openDisplayMessageActivity() {
-        Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, mensagem);
         startActivity(intent);
 
     }
 
     @Override
-    public void setPresenter(MainContract.MainPresenter presenter) {
+    public void setPresenter(HomeContract.HomeContractPresenter presenter) {
         this.presenter = presenter;
     }
 

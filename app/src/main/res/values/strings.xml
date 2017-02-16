@@ -3,4 +3,5 @@
     <string name="Enviar">enviar</string>
     <string name="digite_a_mensagem">Digite a mensagem</string>
     <string name="message">Campo obrigatório</string>
+    <string name="Validado">Validado</string>
 </resources>

@@ -1,17 +1,15 @@
 package com.example.autodoc.appteste;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
-public class MainPresenter implements MainContract.MainPresenter, MainInteractor.MainListener {
-    private MainContract.MainView view;
-    private MainInteractor mainInteractor;
+public class HomePresenter implements HomeContract.HomeContractPresenter, HomeInteractor.MainListener {
+    private HomeContract.HomeContractView view;
+    private HomeInteractor homeInteractor;
 
-    public MainPresenter(MainContract.MainView view, MainInteractor interactor) {
+    public HomePresenter(HomeContract.HomeContractView view, HomeInteractor interactor) {
         this.view = view;
         this.view.setPresenter(this);
-        mainInteractor = interactor;
+        homeInteractor = interactor;
     }
 
     @Inject
@@ -21,7 +19,7 @@ public class MainPresenter implements MainContract.MainPresenter, MainInteractor
 
     @Override
     public void validaCampo(String texto) {
-        mainInteractor.valida(texto, this);
+        homeInteractor.valida(texto, this);
     }
 
     @Override

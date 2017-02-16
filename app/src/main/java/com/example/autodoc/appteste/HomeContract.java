@@ -4,20 +4,20 @@ package com.example.autodoc.appteste;
  * Created by autodoc on 06/02/17.
  */
 
-public interface MainContract {
+public interface HomeContract {
 
-    interface MainView {
+    interface HomeContractView {
         void errorMessage();
 
         void sucess();
 
         void openDisplayMessageActivity();
 
-        void setPresenter(MainContract.MainPresenter presenter);
+        void setPresenter(HomeContractPresenter presenter);
 
     }
 
-    interface MainPresenter {
+    interface HomeContractPresenter {
         void validaCampo(String texto);
 
     }
