@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void openDisplayMessageActivity() {
         Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, mMensagem);
-        startActivity(intent);
+        startActivity(intent); 
 
     }
 
