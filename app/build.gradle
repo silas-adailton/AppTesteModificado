@@ -40,7 +40,10 @@ dependencies {
 
     compile "com.google.dagger:dagger:$libs.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$libs.daggerVersion"
+    compile "com.google.firebase:firebase-core:10.0.1"
+    compile "com.google.firebase:firebase-database:10.0.1"
 
     testCompile "junit:junit:$test.junitVersion"
 }
+apply plugin: 'com.google.gms.google-services'
 
