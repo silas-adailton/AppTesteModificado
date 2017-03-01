@@ -3,6 +3,9 @@ package com.example.autodoc.appteste.presentation.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
 import com.example.autodoc.appteste.presentation.message.MessageActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,15 +35,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @BindView(R.id.progress_message)
     ProgressBar mProgressMessage;
+
+    @BindView(R.id.recyclerViewMessage)
+    RecyclerView recyclerViewMessage;
+
     @Inject
     HomePresenter mHomePresenter;
-    HomeContract.Presenter presenter;
+    HomeContract.Presenter mPresenter;
     private String mMensagem;
+    private HomeRowAdapter mAdapter;
 
     @OnClick(R.id.button_enviar)
     void enviarMensagem() {
         mMensagem = mEditMessage.getText().toString();
-        presenter.saveMessage(mEditMessage.getText().toString());
+        mPresenter.saveMessage(mEditMessage.getText().toString());
+        mPresenter.showMessage();
     }
 
     @Override
@@ -46,8 +57,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mProgressMessage.setVisibility(View.GONE);
 
         initDagger();
+        mPresenter.showMessage();
 
     }
 
@@ -81,13 +94,12 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void openDisplayMessageActivity() {
         Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
         intent.putExtra(EXTRA_MESSAGE, mMensagem);
-        startActivity(intent); 
+        startActivity(intent);
 
     }
 
-    @Override
-    public void setPresenter(HomeContract.Presenter presenter) {
-        this.presenter = presenter;
+    public void setmPresenter(HomeContract.Presenter mPresenter) {
+        this.mPresenter = mPresenter;
     }
 
     @Override
@@ -98,6 +110,17 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void hideProgress() {
         mProgressMessage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMessage(List<Object> list) {
+
+        mAdapter = new HomeRowAdapter(list);
+        recyclerViewMessage.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewMessage.setHasFixedSize(true);
+        recyclerViewMessage.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewMessage.setAdapter(mAdapter);
+
     }
 
 

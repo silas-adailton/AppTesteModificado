@@ -1,13 +1,13 @@
 package com.example.autodoc.appteste.domain.home;
 
-public class home {
+public class Home {
 
     private String mensagem;
 
-    public home() {
+    public Home() {
     }
 
-    public home(String mensagem) {
+    public Home(String mensagem) {
         this.mensagem = mensagem;
     }
 
@@ -23,6 +23,7 @@ public class home {
     public String toString() {
         return "Mensagem: " + this.mensagem;
     }
+
 }
 
 

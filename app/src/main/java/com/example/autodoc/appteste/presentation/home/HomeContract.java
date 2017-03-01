@@ -1,8 +1,7 @@
 package com.example.autodoc.appteste.presentation.home;
 
-/**
- * Created by autodoc on 06/02/17.
- */
+
+import java.util.List;
 
 public interface HomeContract {
 
@@ -16,15 +15,19 @@ public interface HomeContract {
 
         void openDisplayMessageActivity();
 
-        void setPresenter(Presenter presenter);
+        void setmPresenter(Presenter mPresenter);
 
         void showProgress();
 
         void hideProgress();
+
+        void showMessage(List<Object> list);
     }
 
     interface Presenter {
         void saveMessage(String msg);
+
+        void showMessage();
 
     }
 

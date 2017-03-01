@@ -1,7 +1,9 @@
 package com.example.autodoc.appteste.data;
 
-public interface Repository {
-    void saveMessage(String msg, RepositoryExecutor repositoryExecutor);
+import com.example.autodoc.appteste.domain.home.Home;
 
-    void listar();
+public interface Repository {
+    void saveMessage(Home home, RepositoryExecutor repositoryExecutor);
+
+    void listar(RepositoryExecutor repositoryExecutor);
 }
