@@ -123,5 +123,4 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     }
 
-
 }

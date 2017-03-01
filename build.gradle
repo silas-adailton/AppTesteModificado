@@ -41,6 +41,7 @@ ext {
             butterknifeVersion   : '8.5.1',
             constraintLayout     : '1.0.0-beta4',
             daggerVersion        : '2.9',
+            firebaseVersion      : '10.0.1'
 
     ]
 

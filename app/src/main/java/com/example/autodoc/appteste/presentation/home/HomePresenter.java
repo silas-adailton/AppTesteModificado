@@ -29,6 +29,11 @@ public class HomePresenter implements HomeContract.Presenter {
     public void saveMessage(String msg) {
         Home home = new Home();
         home.setMensagem(msg);
+
+        if (msg.isEmpty()) {
+            mView.showErrorFieldEmpty();
+            return;
+        }
         mView.showProgress();
         mHomeInteractor.execute(new HomeInteractor.Request(home), new InteractorExecutor() {
             @Override
@@ -51,6 +56,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 mView.hideProgress();
             }
         });
+
     }
 
     @Override
