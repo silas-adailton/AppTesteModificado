@@ -4,4 +4,6 @@
     <string name="digite_a_mensagem">Digite a mensagem</string>
     <string name="message">Campo obrigatório</string>
     <string name="Validado">Validado</string>
+    <string name="login_hint_password">Senha</string>
+    <string name="login_nome_hint">Login</string>
 </resources>

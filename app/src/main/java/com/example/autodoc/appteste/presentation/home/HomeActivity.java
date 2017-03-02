@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -60,7 +61,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         mProgressMessage.setVisibility(View.GONE);
 
         initDagger();
-        mPresenter.showMessage();
+        initialize();
+
 
     }
 
@@ -116,10 +118,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void showMessage(List<Object> list) {
 
         mAdapter = new HomeRowAdapter(list);
+        recyclerViewMessage.setAdapter(mAdapter);
+    }
+
+    void initialize() {
+
+        //Initialize recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        DividerItemDecoration divider = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerViewMessage.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewMessage.setHasFixedSize(true);
         recyclerViewMessage.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewMessage.setAdapter(mAdapter);
+        recyclerViewMessage.addItemDecoration(divider);
+
+        //Initialize showMessage
+        mPresenter.showMessage();
 
     }
 

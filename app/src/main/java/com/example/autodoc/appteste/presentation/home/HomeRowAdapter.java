@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.autodoc.appteste.R;
 
@@ -41,13 +42,19 @@ public class HomeRowAdapter extends RecyclerView.Adapter<HomeRowAdapter.ViewHold
         return lista.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.textViewItem)
         TextView textViewMessage;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(itemView.getContext(), "Posição: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
         }
     }
 }

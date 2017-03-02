@@ -59,6 +59,7 @@ public class HomeInteractor {
                     }
                 });
 
+
                 homeInteractorExecutor.onSuccess(list);
             }
 
