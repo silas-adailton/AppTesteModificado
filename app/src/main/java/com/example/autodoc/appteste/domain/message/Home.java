@@ -1,4 +1,4 @@
-package com.example.autodoc.appteste.domain.home;
+package com.example.autodoc.appteste.domain.message;
 
 public class Home {
 

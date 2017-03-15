@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 def cfg = rootProject.ext.configuration;
 def libs = rootProject.ext.libraries;
@@ -20,6 +21,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -43,6 +49,8 @@ dependencies {
     compile "com.google.firebase:firebase-core:$libs.firebaseVersion"
     compile "com.google.firebase:firebase-database:$libs.firebaseVersion"
     compile "com.google.firebase:firebase-auth:$libs.firebaseVersion"
+    compile "io.reactivex.rxjava2:rxjava:$libs.rxjava"
+    compile "io.reactivex.rxjava2:rxandroid:$libs.rxandroid"
 
     testCompile "junit:junit:$test.junitVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.autodoc.appteste.R;
+import com.example.autodoc.appteste.domain.message.Home;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeRowAdapter extends RecyclerView.Adapter<HomeRowAdapter.ViewHolder> {
-    List<Object> lista;
+    List<Home> lista;
 
-    public HomeRowAdapter(List<Object> lista) {
+    public HomeRowAdapter(List<Home> lista) {
         this.lista = lista;
     }
 

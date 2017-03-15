@@ -1,6 +1,8 @@
 package com.example.autodoc.appteste.presentation.home;
 
 
+import com.example.autodoc.appteste.domain.message.Home;
+
 import java.util.List;
 
 public interface HomeContract {
@@ -21,10 +23,15 @@ public interface HomeContract {
 
         void hideProgress();
 
-        void showMessage(List<Object> list);
+        void showMessage(List<Home> list);
     }
 
     interface Presenter {
+
+        void save(String msg);
+
+        void showListMessage();
+
         void saveMessage(String msg);
 
         void showMessage();

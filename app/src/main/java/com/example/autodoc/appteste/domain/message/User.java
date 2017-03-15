@@ -1,13 +1,23 @@
-package com.example.autodoc.appteste.domain.home;
+package com.example.autodoc.appteste.domain.message;
 
 public class User {
 
+    private String nome;
     private String login;
     private String password;
 
-    public User(String login, String password) {
+    public User(String nome, String login, String password) {
+        this.nome = nome;
         this.login = login;
         this.password = password;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getLogin() {

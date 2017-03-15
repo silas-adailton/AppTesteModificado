@@ -2,7 +2,7 @@ package com.example.autodoc.appteste.data;
 
 import android.support.annotation.NonNull;
 
-import com.example.autodoc.appteste.domain.home.Home;
+import com.example.autodoc.appteste.domain.message.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,9 +14,14 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class FirebaseRepository implements Repository {
 
@@ -25,6 +30,71 @@ public class FirebaseRepository implements Repository {
     @Inject
     public FirebaseRepository(DatabaseReference databaseReference) {
         this.mDatabaseReference = databaseReference;
+    }
+
+    @Override
+    public Observable<Home> saveMessage(Home home) {
+        return Observable.create(new ObservableOnSubscribe<Home>() {
+            @Override
+            public void subscribe(ObservableEmitter<Home> emitter) throws Exception {
+
+                String mensagemId = mDatabaseReference.push().getKey();
+                mDatabaseReference.child(mensagemId).setValue(home).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        emitter.onNext(home);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        emitter.onError(e);
+
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        emitter.onComplete();
+                    }
+                });
+
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Home>> listMessage() {
+
+        List<Home> list = new ArrayList<Home>();
+        return Observable.create(new ObservableOnSubscribe<List<Home>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<Home>> emitter) throws Exception {
+                mDatabaseReference.getDatabase().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GenericTypeIndicator<Map<String, Home>> typeIndicator = new GenericTypeIndicator<Map<String, Home>>() {
+                        };
+                        Map<String, Home> map = dataSnapshot.getValue(typeIndicator);
+
+                        for (String key : map.keySet()) {
+                            list.add(map.get(key));
+
+                        }
+
+                        emitter.onNext(list);
+                        emitter.onComplete();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                        emitter.onError(databaseError.toException());
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -78,5 +148,6 @@ public class FirebaseRepository implements Repository {
         });
 
     }
+
 
 }

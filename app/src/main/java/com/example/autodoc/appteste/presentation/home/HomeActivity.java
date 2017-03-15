@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
+import com.example.autodoc.appteste.domain.message.Home;
 import com.example.autodoc.appteste.presentation.message.MessageActivity;
 
 import java.util.List;
@@ -46,13 +47,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private String mMensagem;
     private HomeRowAdapter mAdapter;
 
-    @OnClick(R.id.button_enviar)
-    void enviarMensagem() {
-        mMensagem = mEditMessage.getText().toString();
-        mPresenter.saveMessage(mEditMessage.getText().toString());
-        mPresenter.showMessage();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +54,19 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         ButterKnife.bind(this);
         mProgressMessage.setVisibility(View.GONE);
 
-        initDagger();
-        initialize();
-
-
+        initializeDagger();
+        initializeRecyclerview();
     }
 
-    private void initDagger() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //mPresenter.showMessage();
+        mPresenter.showListMessage();
+    }
+
+    private void initializeDagger() {
         DaggerHomeComponent.builder()
                 .mainComponent(MainApplication.getsMainComponent())
                 .repositoryComponent(MainApplication.getsRepositoryComponent())
@@ -115,15 +115,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     @Override
-    public void showMessage(List<Object> list) {
+    public void showMessage(List<Home> list) {
 
         mAdapter = new HomeRowAdapter(list);
         recyclerViewMessage.setAdapter(mAdapter);
     }
 
-    void initialize() {
+    void initializeRecyclerview() {
 
-        //Initialize recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DividerItemDecoration divider = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerViewMessage.setLayoutManager(new LinearLayoutManager(this));
@@ -131,9 +130,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         recyclerViewMessage.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMessage.addItemDecoration(divider);
 
-        //Initialize showMessage
-        mPresenter.showMessage();
 
+    }
+
+    @OnClick(R.id.button_enviar)
+    void enviarMensagem() {
+        mMensagem = mEditMessage.getText().toString();
+        // mPresenter.saveMessage(mEditMessage.getText().toString());
+        mPresenter.save(mEditMessage.getText().toString());
+        //mPresenter.showMessage();
+        mPresenter.showListMessage();
     }
 
 }

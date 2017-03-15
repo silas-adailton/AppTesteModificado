@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
+            android:id="@+id/edit_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_nome_hint" />
@@ -32,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <EditText
+            android:id="@+id/edit_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_hint_password" />
@@ -42,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Button"
+        android:text="@string/acessar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />

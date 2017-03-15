@@ -1,16 +1,20 @@
-package com.example.autodoc.appteste.domain.home.interactor;
+package com.example.autodoc.appteste.domain.message.interactor;
 
 
 import com.example.autodoc.appteste.data.Repository;
 import com.example.autodoc.appteste.data.RepositoryExecutor;
-import com.example.autodoc.appteste.domain.home.Home;
-import com.example.autodoc.appteste.domain.home.InteractorExecutor;
+import com.example.autodoc.appteste.domain.message.Home;
+import com.example.autodoc.appteste.domain.message.InteractorExecutor;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeInteractor {
 
@@ -19,6 +23,20 @@ public class HomeInteractor {
     @Inject
     public HomeInteractor(Repository repository) {
         mRepository = repository;
+    }
+
+    public Observable<Home> saveMessage(Home home) {
+
+        return mRepository.saveMessage(home);
+    }
+
+    public Observable<List<Home>> listMessage() {
+
+        return mRepository.listMessage()
+                .sorted()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+
     }
 
     public void execute(Request request, final InteractorExecutor homeInteractorExecutor) {
@@ -85,14 +103,14 @@ public class HomeInteractor {
 
     public static final class Request {
 
-        private Home mMessage;
+        private Home mHome;
 
-        public Request(Home message) {
-            this.mMessage = message;
+        public Request(Home home) {
+            this.mHome = home;
         }
 
         public Home getMessage() {
-            return mMessage;
+            return mHome;
         }
 
 

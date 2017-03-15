@@ -1,12 +1,14 @@
 package com.example.autodoc.appteste.presentation.home;
 
-import com.example.autodoc.appteste.domain.home.Home;
-import com.example.autodoc.appteste.domain.home.InteractorExecutor;
-import com.example.autodoc.appteste.domain.home.interactor.HomeInteractor;
+import com.example.autodoc.appteste.domain.message.Home;
+import com.example.autodoc.appteste.domain.message.InteractorExecutor;
+import com.example.autodoc.appteste.domain.message.interactor.HomeInteractor;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.observers.DisposableObserver;
 
 public class HomePresenter implements HomeContract.Presenter {
 
@@ -23,6 +25,63 @@ public class HomePresenter implements HomeContract.Presenter {
     @Inject
     public void setupListeners() {
         mView.setmPresenter(this);
+    }
+
+    @Override
+    public void save(String msg) {
+        Home home = new Home();
+        home.setMensagem(msg);
+
+        if (msg.isEmpty()) {
+            mView.showErrorFieldEmpty();
+            return;
+        }
+        mView.showProgress();
+
+        mHomeInteractor.saveMessage(home).subscribeWith(new DisposableObserver<Home>() {
+            @Override
+            public void onNext(Home home) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.hideProgress();
+                mView.showErrorMessage(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideProgress();
+                mView.showMessageSuccess();
+
+            }
+        });
+
+    }
+
+    @Override
+    public void showListMessage() {
+        mView.showProgress();
+
+        mHomeInteractor.listMessage().subscribeWith(new DisposableObserver<List<Home>>() {
+            @Override
+            public void onNext(List<Home> homes) {
+                mView.showMessage(homes);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.hideProgress();
+                mView.showErrorMessage(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideProgress();
+
+            }
+        });
     }
 
     @Override
@@ -66,7 +125,7 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onSuccess(List<Object> object) {
                 mView.hideProgress();
-                mView.showMessage(object);
+                // mView.showMessage(object);
             }
 
             @Override
