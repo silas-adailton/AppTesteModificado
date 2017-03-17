@@ -13,8 +13,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeInteractor {
 
@@ -27,15 +25,20 @@ public class HomeInteractor {
 
     public Observable<Home> saveMessage(Home home) {
 
-        return mRepository.saveMessage(home);
+        return mRepository.saveMessage(new Request(home).getMessage());
     }
 
     public Observable<List<Home>> listMessage() {
 
         return mRepository.listMessage()
-                .sorted()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
+                .flatMap(list -> Observable.fromIterable(list))
+                .sorted(new Comparator<Home>() {
+                    @Override
+                    public int compare(Home o1, Home o2) {
+                        return o1.getMensagem().compareTo(o2.getMensagem());
+                    }
+                })
+                .toList().toObservable();
 
     }
 

@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
@@ -34,11 +35,14 @@ public class FirebaseRepository implements Repository {
 
     @Override
     public Observable<Home> saveMessage(Home home) {
+
         return Observable.create(new ObservableOnSubscribe<Home>() {
             @Override
             public void subscribe(ObservableEmitter<Home> emitter) throws Exception {
 
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("Mensagens");
                 String mensagemId = mDatabaseReference.push().getKey();
+
                 mDatabaseReference.child(mensagemId).setValue(home).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -64,12 +68,13 @@ public class FirebaseRepository implements Repository {
 
     @Override
     public Observable<List<Home>> listMessage() {
-
         List<Home> list = new ArrayList<Home>();
+
         return Observable.create(new ObservableOnSubscribe<List<Home>>() {
             @Override
             public void subscribe(ObservableEmitter<List<Home>> emitter) throws Exception {
-                mDatabaseReference.getDatabase().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+
+                mDatabaseReference.child("Mensagens").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<Map<String, Home>> typeIndicator = new GenericTypeIndicator<Map<String, Home>>() {
@@ -79,10 +84,11 @@ public class FirebaseRepository implements Repository {
                         for (String key : map.keySet()) {
                             list.add(map.get(key));
 
-                        }
 
+                        }
                         emitter.onNext(list);
                         emitter.onComplete();
+
                     }
 
                     @Override

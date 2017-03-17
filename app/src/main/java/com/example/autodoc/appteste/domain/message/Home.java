@@ -21,9 +21,17 @@ public class Home {
 
     @Override
     public String toString() {
-        return "Mensagem: " + this.mensagem;
+        return this.mensagem;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Home home = (Home) obj;
+        return super.equals(obj);
+    }
 }
 
 
