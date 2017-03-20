@@ -26,6 +26,7 @@ public class HomeInteractor {
     public Observable<Home> saveMessage(Home home) {
 
         return mRepository.saveMessage(new Request(home).getMessage());
+        //return mRepository.saveMessage(request.getMessage());
     }
 
     public Observable<List<Home>> listMessage() {
@@ -38,6 +39,11 @@ public class HomeInteractor {
                         return o1.getMensagem().compareTo(o2.getMensagem());
                     }
                 })
+                .map(home -> {
+                    home.setMensagem(home.getMensagem().toUpperCase());
+                    return home;
+                })
+                .filter(home -> home.getMensagem().contains(""))
                 .toList().toObservable();
 
     }
