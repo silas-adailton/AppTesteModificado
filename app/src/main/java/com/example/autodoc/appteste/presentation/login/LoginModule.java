@@ -5,6 +5,7 @@ import dagger.Provides;
 
 @Module
 public class LoginModule {
+
     LoginContract.view mView;
 
     public LoginModule(LoginContract.view mView) {
@@ -12,8 +13,7 @@ public class LoginModule {
     }
 
     @Provides
-    LoginContract.view providerLogView() {
-
+    LoginContract.view getmView() {
         return mView;
     }
 }

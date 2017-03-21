@@ -9,8 +9,8 @@ import io.reactivex.observers.DisposableObserver;
 
 public class LoginPresenter implements LoginContract.presenter {
 
-    private LoginContract.view mView;
-    private LoginInteractor mLoginInteractor;
+    LoginContract.view mView;
+    LoginInteractor mLoginInteractor;
 
     @Inject
     public LoginPresenter(LoginContract.view mView, LoginInteractor mLoginInteractor) {

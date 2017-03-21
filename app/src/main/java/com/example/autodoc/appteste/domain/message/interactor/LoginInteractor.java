@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 
 public class LoginInteractor {
 
-    public RepositoryUser mRepositoryUser;
+    RepositoryUser mRepositoryUser;
 
     @Inject
     public LoginInteractor(RepositoryUser mRepositoryUser) {

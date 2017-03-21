@@ -21,7 +21,24 @@ public class FirebaseModule {
     }
 
     @Provides
-    FirebaseAuth.AuthStateListener getFireAuthStateListener() {
-        return (FirebaseAuth.AuthStateListener) FirebaseAuth.getInstance();
+    FirebaseAuth getFireAuth() {
+        return FirebaseAuth.getInstance();
     }
+
+   /* @Provides
+    FirebaseAuth.AuthStateListener getAuthStateListener(FirebaseAuth.AuthStateListener authStateListener){
+        return (FirebaseAuth.AuthStateListener) FirebaseAuth.getInstance();
+    }*/
+
+    /*@Provides
+    RepositoryUser getRepositoryUser(FirebaseAuth auth,FirebaseAuth.AuthStateListener authStateListener){
+        return new FirebaseRepositoryUser(auth,authStateListener);
+    }*/
+
+    @Provides
+    RepositoryUser getRepositoryUser(FirebaseAuth auth) {
+        return new FirebaseRepositoryUser(auth);
+    }
+
+
 }

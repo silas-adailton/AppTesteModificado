@@ -3,7 +3,6 @@ package com.example.autodoc.appteste.presentation.login;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -11,9 +10,6 @@ import android.widget.Toast;
 
 import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
     EditText mEditPassword;
     @BindView(R.id.progress_login)
     ProgressBar progressLogin;
+
     @Inject
     LoginPresenter presenter;
     LoginContract.presenter mLoginContractPresenter;
@@ -42,7 +39,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         progressLogin.setVisibility(View.GONE);
+
         initializeDagger();
+
         // initializeMauthStateListener();
 
     }
@@ -53,9 +52,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
                 .repositoryComponent(MainApplication.getsRepositoryComponent())
                 .loginModule(new LoginModule(this))
                 .build().inject(this);
+
     }
 
-    private void initializeMauthStateListener() {
+    /*private void initializeMauthStateListener() {
         mAuth = FirebaseAuth.getInstance();
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -70,9 +70,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
                 }
             }
         };
-    }
+    }*/
 
-    private void sigIn(String login, String password) {
+   /* private void sigIn(String login, String password) {
         mAuth.signInWithEmailAndPassword(login, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
                         }
                     }
                 });
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -98,9 +98,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
     protected void onStop() {
         super.onStop();
 
-        if (mAuthStateListener != null) {
+      /*  if (mAuthStateListener != null) {
             mAuth.removeAuthStateListener(mAuthStateListener);
-        }
+        }*/
     }
 
     @Override

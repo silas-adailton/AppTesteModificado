@@ -18,19 +18,23 @@ import io.reactivex.ObservableOnSubscribe;
 
 public class FirebaseRepositoryUser implements RepositoryUser {
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    /* @Inject
+     public FirebaseRepositoryUser(FirebaseAuth mAuth, FirebaseAuth.AuthStateListener mAuthStateListener) {
+         this.mAuth = mAuth;
+         this.mAuthStateListener = mAuthStateListener;
+     }*/
     @Inject
-    public FirebaseRepositoryUser(FirebaseAuth mAuth, FirebaseAuth.AuthStateListener mAuthStateListener) {
+    public FirebaseRepositoryUser(FirebaseAuth mAuth) {
         this.mAuth = mAuth;
-        this.mAuthStateListener = mAuthStateListener;
     }
 
     @Override
     public Observable<User> sigIn(User user) {
         mAuth = FirebaseAuth.getInstance();
-
+        mAuth.addAuthStateListener(mAuthStateListener);
 
         return Observable.create(new ObservableOnSubscribe<User>() {
             @Override
@@ -52,6 +56,7 @@ public class FirebaseRepositoryUser implements RepositoryUser {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.e("Erro", "onFailure: " + e.getMessage());
                         emitter.onError(e);
 
                     }
