@@ -2,7 +2,6 @@ package com.example.autodoc.appteste;
 
 import android.app.Application;
 
-import com.example.autodoc.appteste.data.DaggerRepositoryComponent;
 import com.example.autodoc.appteste.data.FirebaseModule;
 import com.example.autodoc.appteste.data.RepositoryComponent;
 

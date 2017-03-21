@@ -73,18 +73,20 @@ public class FirebaseRepository implements Repository {
         return Observable.create(new ObservableOnSubscribe<List<Home>>() {
             @Override
             public void subscribe(ObservableEmitter<List<Home>> emitter) throws Exception {
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("Mensagens");
 
-                mDatabaseReference.child("Mensagens").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         GenericTypeIndicator<Map<String, Home>> typeIndicator = new GenericTypeIndicator<Map<String, Home>>() {
                         };
                         Map<String, Home> map = dataSnapshot.getValue(typeIndicator);
 
+
                         for (String key : map.keySet()) {
                             list.add(map.get(key));
                         }
-
                         emitter.onNext(list);
                         emitter.onComplete();
 
