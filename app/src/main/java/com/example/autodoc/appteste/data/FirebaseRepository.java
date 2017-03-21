@@ -83,9 +83,8 @@ public class FirebaseRepository implements Repository {
 
                         for (String key : map.keySet()) {
                             list.add(map.get(key));
-
-
                         }
+
                         emitter.onNext(list);
                         emitter.onComplete();
 

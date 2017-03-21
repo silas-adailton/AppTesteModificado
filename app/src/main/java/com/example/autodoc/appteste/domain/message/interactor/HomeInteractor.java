@@ -8,11 +8,16 @@ import com.example.autodoc.appteste.domain.message.InteractorExecutor;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 public class HomeInteractor {
 
@@ -38,7 +43,15 @@ public class HomeInteractor {
                         return o1.getMensagem().compareTo(o2.getMensagem());
                     }
                 })
+                .map(new Function<Home, Home>() {
+                    @Override
+                    public Home apply(@NonNull Home home) throws Exception {
+                        home.setMensagem(home.getMensagem().toUpperCase() + " Alguma coisa");
+                        return home;
+                    }
+                })
                 .toList().toObservable();
+
 
     }
 
