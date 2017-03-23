@@ -1,5 +1,6 @@
 package com.example.autodoc.appteste.presentation.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     HomeContract.Presenter mPresenter;
     private String mMensagem;
     private HomeRowAdapter mAdapter;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, HomeActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

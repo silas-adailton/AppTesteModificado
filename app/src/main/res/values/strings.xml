@@ -5,7 +5,7 @@
     <string name="message">Campo obrigatório</string>
     <string name="Validado">Validado</string>
     <string name="login_hint_password">Senha</string>
-    <string name="login_nome_hint">Login</string>
+    <string name="login_nome_hint">Email</string>
     <string name="acessar">Acessar</string>
     <string name="msg_campo_obrigatorio">Campo obrigatório</string>
     <string name="msg_error_login">Erro na autenticação</string>

@@ -6,7 +6,6 @@ import dagger.Component;
 public interface RepositoryComponent {
 
     Repository getRepository();
-
     RepositoryUser getRepositoryUser();
 
 }

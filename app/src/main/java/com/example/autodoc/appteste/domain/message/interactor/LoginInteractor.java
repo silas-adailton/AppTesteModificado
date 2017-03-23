@@ -6,10 +6,12 @@ import com.example.autodoc.appteste.domain.message.User;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class LoginInteractor {
 
-    public RepositoryUser mRepositoryUser;
+    RepositoryUser mRepositoryUser;
 
     @Inject
     public LoginInteractor(RepositoryUser mRepositoryUser) {
@@ -17,7 +19,9 @@ public class LoginInteractor {
     }
 
     public Observable executeLogin(Request request) {
-        return mRepositoryUser.sigIn(request.getUser());
+        return mRepositoryUser.sigIn(request.getUser())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public static final class Request {

@@ -20,7 +20,8 @@
             android:id="@+id/edit_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_nome_hint" />
+            android:hint="@string/login_nome_hint"
+            android:text="" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -36,7 +37,8 @@
             android:id="@+id/edit_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_hint_password" />
+            android:hint="@string/login_hint_password"
+            android:text="" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

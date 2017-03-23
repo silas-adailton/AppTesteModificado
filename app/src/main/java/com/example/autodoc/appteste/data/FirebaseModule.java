@@ -21,7 +21,14 @@ public class FirebaseModule {
     }
 
     @Provides
-    FirebaseAuth.AuthStateListener getFireAuthStateListener() {
-        return (FirebaseAuth.AuthStateListener) FirebaseAuth.getInstance();
+    FirebaseAuth providerFirebaseAuth() {
+        return FirebaseAuth.getInstance();
     }
+
+    @Provides
+    RepositoryUser getRepositoryUser(FirebaseAuth mAuth) {
+        return new FirebaseRepositoryUser(mAuth);
+
+    }
+
 }

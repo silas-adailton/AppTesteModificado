@@ -9,13 +9,13 @@ public interface LoginContract {
 
         void showMessageErrorLogin(Throwable e);
 
-        void mauthStateListener();
-
         void showProgress();
 
         void hideProgress();
 
         void setPresenter(LoginContract.presenter presenter);
+
+        void openHomeMessage();
 
     }
 
