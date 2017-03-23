@@ -8,4 +8,5 @@ public interface RepositoryComponent {
     Repository getRepository();
     RepositoryUser getRepositoryUser();
 
+
 }

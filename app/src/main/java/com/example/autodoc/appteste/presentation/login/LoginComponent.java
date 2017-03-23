@@ -7,6 +7,5 @@ import dagger.Component;
 
 @Component(dependencies = {MainComponent.class, RepositoryComponent.class}, modules = {LoginModule.class})
 public interface LoginComponent {
-
     void inject(LoginActivity loginActivity);
 }
