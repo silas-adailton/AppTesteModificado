@@ -9,4 +9,7 @@
     <string name="acessar">Acessar</string>
     <string name="msg_campo_obrigatorio">Campo obrigatório</string>
     <string name="msg_error_login">Erro na autenticação</string>
+    <string name="senha">Senha</string>
+    <string name="email">Email</string>
+    <string name="nome">Nome</string>
 </resources>

@@ -10,6 +10,5 @@ import dagger.Component;
 public interface HomeComponent {
 
     void inject(HomeActivity homeActivity);
-    // void inject(LoginActivity loginActivity);
 
 }
