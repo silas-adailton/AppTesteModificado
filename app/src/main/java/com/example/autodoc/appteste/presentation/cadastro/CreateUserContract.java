@@ -4,7 +4,7 @@ public interface CreateUserContract {
     interface view {
         void showMessageCreateUser();
 
-        void showMessageCreateUserError();
+        void showMessageCreateUserError(Throwable e);
 
         void showProgress();
 
@@ -12,11 +12,13 @@ public interface CreateUserContract {
 
         void setPresenter(Presenter presenter);
 
-        void showFieldIsEmpty();
+        void showFieldEmailIsEmpty();
+
+        void showFieldSenhaIsEmpty();
     }
 
     interface Presenter {
-        void createUser(String nome, String email, String Password);
+        void createUser(String email, String Password);
 
     }
 }

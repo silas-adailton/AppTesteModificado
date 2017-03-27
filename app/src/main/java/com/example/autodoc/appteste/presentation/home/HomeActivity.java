@@ -66,8 +66,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     protected void onStart() {
         super.onStart();
-
-        //mPresenter.showMessage();
         mPresenter.showListMessage();
     }
 
@@ -141,9 +139,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @OnClick(R.id.button_enviar)
     void enviarMensagem() {
         mMensagem = mEditMessage.getText().toString();
-        // mPresenter.saveMessage(mEditMessage.getText().toString());
         mPresenter.save(mEditMessage.getText().toString());
-        //mPresenter.showMessage();
         mPresenter.showListMessage();
     }
 

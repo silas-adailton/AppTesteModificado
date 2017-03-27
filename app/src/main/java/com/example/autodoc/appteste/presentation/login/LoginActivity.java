@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
+import com.example.autodoc.appteste.presentation.cadastro.CreateUserActivity;
 import com.example.autodoc.appteste.presentation.home.HomeActivity;
 
 import javax.inject.Inject;
@@ -130,5 +131,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
     void Login() {
         presenter.sigIn(mEditEmail.getText().toString().toLowerCase().trim(), mEditPassword.getText().toString().toLowerCase().trim());
 
+    }
+
+    @OnClick(R.id.text_sign_in)
+    void openCadastroUser() {
+        startActivity(CreateUserActivity.getStartIntent(this));
     }
 }

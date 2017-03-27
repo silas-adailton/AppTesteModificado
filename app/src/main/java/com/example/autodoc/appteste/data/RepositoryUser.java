@@ -7,4 +7,6 @@ import io.reactivex.Observable;
 public interface RepositoryUser {
 
     Observable<User> sigIn(User user);
+
+    Observable<User> createUser(User user);
 }
