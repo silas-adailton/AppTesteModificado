@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
 
 import javax.inject.Inject;
@@ -17,10 +16,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class CreateUserActivity extends AppCompatActivity implements CreateUserContract.view {
-    @BindView(R.id.edit_nome)
-    EditText editNome;
     @BindView(R.id.edit_email)
     EditText editEmail;
     @BindView(R.id.edit_senha)
@@ -30,7 +28,6 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 
     @Inject
     CreateUserPresenter mPresenter;
-    CreateUserPresenter presenter;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, CreateUserActivity.class);
@@ -46,12 +43,7 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
     }
 
     private void initializeDagger() {
-        DaggerCreateUserComponent.builder()
-                .mainComponent(MainApplication.getsMainComponent())
-                .repositoryComponent(MainApplication.getsRepositoryComponent())
-                .createUserModule(new CreateUserModule(this))
-                .build()
-                .inject(this);
+        AndroidInjection.inject(this);
 
     }
 
@@ -73,11 +65,6 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
     @Override
     public void hideProgress() {
         progress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setPresenter(CreateUserContract.Presenter presenter) {
-        this.presenter = mPresenter;
     }
 
     @Override

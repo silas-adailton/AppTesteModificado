@@ -1,19 +1,21 @@
 package com.example.autodoc.appteste.presentation.cadastro;
 
+import com.example.autodoc.appteste.data.RepositoryUser;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class CreateUserModule {
 
-    CreateUserContract.view mView;
-
-    public CreateUserModule(CreateUserContract.view mView) {
-        this.mView = mView;
+    @Provides
+    CreateUserContract.view providerCreateView(CreateUserActivity createUserActivity) {
+        return createUserActivity;
     }
 
     @Provides
-    CreateUserContract.view providerView() {
-        return mView;
+    CreateUserPresenter providerCreatePresenter(CreateUserContract.view view, RepositoryUser repositoryUser) {
+
+        return new CreateUserPresenter(view, repositoryUser);
     }
 }

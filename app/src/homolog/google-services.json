@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "457404012249",
+    "firebase_url": "https://apptestehomolog.firebaseio.com",
+    "project_id": "apptestehomolog",
+    "storage_bucket": "apptestehomolog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457404012249:android:eeeba2790e120ed2",
+        "android_client_info": {
+          "package_name": "com.example.autodoc.appteste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457404012249-36a0fphet7rfb54u22auo1poch7o9k9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA9dtHXAb0NK2JljX78RYeUGnBpVh-8IY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

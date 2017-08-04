@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 def cfg = rootProject.ext.configuration;
 def libs = rootProject.ext.libraries;
@@ -16,6 +16,26 @@ android {
         versionName cfg.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    flavorDimensions "api"
+    productFlavors {
+        dev {
+            "google-services.json"
+            dimension "api"
+        }
+
+        homolog {
+            "google-services.json"
+            dimension "api"
+        }
+
+        prod {
+            "google-services.json"
+            dimension "api"
+        }
+
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,22 +58,56 @@ dependencies {
 
     //Android dependencies
     compile "com.android.support:appcompat-v7:$libs.supportLibraryVersion"
-    compile "com.android.support.constraint:constraint-layout:$libs.constraintLayout"
+    compile "com.android.support:cardview-v7:$libs.supportLibraryVersion"
     compile "com.android.support:design:$libs.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$libs.supportLibraryVersion"
+    compile "com.android.support:support-v4:$libs.supportLibraryVersion"
+    compile "com.android.support.constraint:constraint-layout:$libs.constraintLayout"
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
 
     compile "com.jakewharton:butterknife:$libs.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$libs.butterknifeVersion"
 
     compile "com.google.dagger:dagger:$libs.daggerVersion"
+    compile "com.google.dagger:dagger-android:$libs.daggerVersion"
+    compile "com.google.dagger:dagger-android-support:$libs.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$libs.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$libs.daggerVersion"
+
     compile "com.google.firebase:firebase-core:$libs.firebaseVersion"
     compile "com.google.firebase:firebase-database:$libs.firebaseVersion"
     compile "com.google.firebase:firebase-auth:$libs.firebaseVersion"
+
     compile "io.reactivex.rxjava2:rxjava:$libs.rxjava"
     compile "io.reactivex.rxjava2:rxandroid:$libs.rxandroid"
+    compile 'com.jakewharton.timber:timber:4.5.1'
 
     testCompile "junit:junit:$test.junitVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    testCompile "org.mockito:mockito-all:$test.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$test.hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$test.powerMockito"
+    testCompile "org.powermock:powermock-api-mockito:$test.powerMockito"
+
+    // Android Testing Support Library's runner and rules
+    androidTestCompile "com.android.support.test:runner:$test.runnerVersion"
+    androidTestCompile "com.android.support.test:rules:$test.rulesVersion"
+
+    // Espresso UI Testing dependencies.
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$test.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$test.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$test.espressoVersion"
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-annotations:$libs.supportLibraryVersion"
+    }
+
+    configurations.compile.dependencies.each { compileDependency ->
+        println "Excluding compile dependency: ${compileDependency.getName()}"
+        configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
+            configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
+        }
+
+    }
 }
 apply plugin: 'com.google.gms.google-services'
 

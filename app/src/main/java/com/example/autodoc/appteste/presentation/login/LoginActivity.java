@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
 import com.example.autodoc.appteste.presentation.cadastro.CreateUserActivity;
 import com.example.autodoc.appteste.presentation.home.HomeActivity;
@@ -17,6 +16,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.view {
     @BindView(R.id.edit_login)
@@ -25,26 +25,21 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
     EditText mEditPassword;
     @BindView(R.id.progress_login)
     ProgressBar progressLogin;
+
     @Inject
-    LoginPresenter presenter;
     LoginContract.presenter mLoginContractPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDagger();
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         progressLogin.setVisibility(View.GONE);
-        initializeDagger();
-
     }
 
     private void initializeDagger() {
-        DaggerLoginComponent.builder()
-                .mainComponent(MainApplication.getsMainComponent())
-                .repositoryComponent(MainApplication.getsRepositoryComponent())
-                .loginModule(new LoginModule(this))
-                .build().inject(this);
+        AndroidInjection.inject(this);
     }
 
     /*private Observable initializeMauthStateListener() {
@@ -118,18 +113,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.vi
     }
 
     @Override
-    public void setPresenter(LoginContract.presenter presenter) {
-        this.mLoginContractPresenter = presenter;
-    }
-
-    @Override
     public void openHomeMessage() {
         startActivity(HomeActivity.getStartIntent(this));
     }
 
     @OnClick(R.id.button_login)
     void Login() {
-        presenter.sigIn(mEditEmail.getText().toString().toLowerCase().trim(), mEditPassword.getText().toString().toLowerCase().trim());
+        mLoginContractPresenter.sigIn(mEditEmail.getText().toString().toLowerCase().trim(), mEditPassword.getText().toString().toLowerCase().trim());
 
     }
 

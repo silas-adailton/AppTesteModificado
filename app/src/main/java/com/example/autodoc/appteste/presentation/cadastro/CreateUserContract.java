@@ -10,8 +10,6 @@ public interface CreateUserContract {
 
         void hideProgress();
 
-        void setPresenter(Presenter presenter);
-
         void showFieldEmailIsEmpty();
 
         void showFieldSenhaIsEmpty();

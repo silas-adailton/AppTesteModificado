@@ -13,8 +13,6 @@ public interface LoginContract {
 
         void hideProgress();
 
-        void setPresenter(LoginContract.presenter presenter);
-
         void openHomeMessage();
 
     }

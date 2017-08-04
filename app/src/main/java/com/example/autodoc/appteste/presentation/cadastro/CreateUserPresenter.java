@@ -17,11 +17,6 @@ public class CreateUserPresenter implements CreateUserContract.Presenter {
         this.mRepositoryUser = repositoryUser;
     }
 
-    @Inject
-    public void setUpListener() {
-        this.mView.setPresenter(this);
-    }
-
 
     @Override
     public void createUser(String email, String senha) {
@@ -32,6 +27,7 @@ public class CreateUserPresenter implements CreateUserContract.Presenter {
         }
         if (senha.isEmpty()) {
             mView.showFieldSenhaIsEmpty();
+            return;
         }
 
         mView.showProgress();

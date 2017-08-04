@@ -1,20 +1,22 @@
 package com.example.autodoc.appteste.presentation.home;
 
+import com.example.autodoc.appteste.domain.message.interactor.HomeInteractor;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class HomeModule {
 
-    HomeContract.View mView;
-
-    public HomeModule(HomeContract.View mView) {
-        this.mView = mView;
+    @Provides
+    HomeContract.View providerHomeView(HomeActivity homeActivity) {
+        return homeActivity;
     }
 
     @Provides
-    HomeContract.View provideHomeView() {
-        return mView;
+    HomeContract.Presenter providerHomePresenter(HomeContract.View view, HomeInteractor homeInteractor) {
+        return new HomePresenter(view, homeInteractor);
+
     }
 
 }

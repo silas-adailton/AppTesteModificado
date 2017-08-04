@@ -9,18 +9,13 @@ import io.reactivex.observers.DisposableObserver;
 
 public class LoginPresenter implements LoginContract.presenter {
 
-    LoginContract.view mView;
-    LoginInteractor mLoginInteractor;
+    private LoginContract.view mView;
+    private LoginInteractor mLoginInteractor;
 
     @Inject
     public LoginPresenter(LoginContract.view mView, LoginInteractor mLoginInteractor) {
         this.mView = mView;
         this.mLoginInteractor = mLoginInteractor;
-    }
-
-    @Inject
-    public void setupListeners() {
-        mView.setPresenter(this);
     }
 
     @Override

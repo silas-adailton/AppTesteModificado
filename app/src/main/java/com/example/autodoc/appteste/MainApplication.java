@@ -1,43 +1,50 @@
 package com.example.autodoc.appteste;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 
-import com.example.autodoc.appteste.data.DaggerRepositoryComponent;
-import com.example.autodoc.appteste.data.FirebaseModule;
-import com.example.autodoc.appteste.data.RepositoryComponent;
+import com.example.autodoc.appteste.di.DaggerApplicationComponent;
+
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.HasServiceInjector;
 
 
-public class MainApplication extends Application {
-    private static MainComponent sMainComponent;
-    private static RepositoryComponent sRepositoryComponent;
-    // private static RepositoryUserComponent sRepositoryUserComponent;
+public class MainApplication extends Application implements HasActivityInjector, HasServiceInjector {
 
-    public static MainComponent getsMainComponent() {
-        return sMainComponent;
-    }
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
-    public static RepositoryComponent getsRepositoryComponent() {
-        return sRepositoryComponent;
-    }
-
- /*   public static RepositoryUserComponent getsRepositoryUserComponent(){
-        return sRepositoryUserComponent;
-    }*/
+    @Inject
+    DispatchingAndroidInjector<Service> serviceDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        sMainComponent = DaggerMainComponent.builder()
-                .mainModule(new MainModule(getApplicationContext()))
-                .build();
+        DaggerApplicationComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
 
-        sRepositoryComponent = DaggerRepositoryComponent.builder()
-                .firebaseModule(new FirebaseModule())
-                .build();
 
-        /*sRepositoryUserComponent = DaggerRepositoryUserComponent.builder()
-                .firebaseModule(new FirebaseModule())
-                .build();*/
+//        if (BuildConfig.DEBUG){
+//            Timber.plant(new Timber.DebugTree());
+//        }
+
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
+    }
+
+    @Override
+    public AndroidInjector<Service> serviceInjector() {
+        return serviceDispatchingAndroidInjector;
     }
 }

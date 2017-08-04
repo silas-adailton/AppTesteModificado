@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.autodoc.appteste.MainApplication;
 import com.example.autodoc.appteste.R;
 import com.example.autodoc.appteste.domain.message.Home;
 import com.example.autodoc.appteste.presentation.message.MessageActivity;
@@ -26,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
     public static final String EXTRA_MESSAGE = "com.example.autodoc.appteste.EXTRA_MENSAGEM";
@@ -57,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mProgressMessage.setVisibility(View.GONE);
 
         initializeDagger();
@@ -70,13 +72,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     private void initializeDagger() {
-        DaggerHomeComponent.builder()
-                .mainComponent(MainApplication.getsMainComponent())
-                .repositoryComponent(MainApplication.getsRepositoryComponent())
-                .homeModule(new HomeModule(this))
-                .build()
-                .inject(this);
-
+        AndroidInjection.inject(this);
     }
 
     @Override
